@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 function Categories(){
-  const [activeCatIndex, setActiveCatIndex] = useState(1)
+  const [activeCatIndex, setActiveCatIndex] = useState(0)
 
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
