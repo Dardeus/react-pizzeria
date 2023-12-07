@@ -5,13 +5,15 @@ import PizzaBlock from "../components/PizzaBlock";
 import React, {useContext, useEffect, useState} from "react";
 import Pagination from "../components/Pagination";
 import {SearchContext} from "../App";
+import {useSelector} from "react-redux";
 
 const Home = () => {
+  const categoryIndex = useSelector(state => state.filter.categoryIndex);
+  const activeSort = useSelector(state => state.filter.activeSort);
+
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [activeCatIndex, setActiveCatIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [activeSort, setActiveSort] = useState({name: 'популярности (+)', sortProperty: 'rating'});
   const {searchValue} = useContext(SearchContext)
 
   useEffect(() => {
@@ -19,7 +21,7 @@ const Home = () => {
     const sorting=activeSort.sortProperty
 
     const url = new URL('https://6569c4f9de53105b0dd79f48.mockapi.io/items');
-    if (activeCatIndex) url.searchParams.append('category', activeCatIndex);
+    if (categoryIndex) url.searchParams.append('category', categoryIndex);
     url.searchParams.append('sortBy', sorting.replace('-', ''));
     url.searchParams.append('order', sorting.includes('-') ? 'desc' : 'asc');
     url.searchParams.append('page', currentPage);
@@ -34,13 +36,13 @@ const Home = () => {
         setItems(arr)
         setLoading(false)
       })
-  }, [activeCatIndex, activeSort, searchValue, currentPage])
+  }, [categoryIndex, activeSort, searchValue, currentPage])
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories activeCatIndex={activeCatIndex} setActiveCatIndex={(i)=>setActiveCatIndex(i)}/>
-        <Sort activeSort={activeSort} setActiveSort={(i)=>setActiveSort(i)}/>
+        <Categories/>
+        <Sort/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
