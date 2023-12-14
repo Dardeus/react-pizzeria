@@ -6,14 +6,15 @@ import React, {useContext, useEffect, useState} from "react";
 import Pagination from "../components/Pagination";
 import {SearchContext} from "../App";
 import {useSelector} from "react-redux";
+import axios from "axios";
 
 const Home = () => {
   const categoryIndex = useSelector(state => state.filter.categoryIndex);
   const activeSort = useSelector(state => state.filter.activeSort);
+  const currentPage = useSelector(state => state.filter.currentPage);
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const {searchValue} = useContext(SearchContext)
 
   useEffect(() => {
@@ -28,12 +29,9 @@ const Home = () => {
     url.searchParams.append('limit', 4);
     if (searchValue) url.searchParams.append('search', searchValue);
 
-    fetch(url)
+    axios.get(url)
       .then(res => {
-        return res.json()
-      })
-      .then(arr => {
-        setItems(arr)
+        setItems(res.data)
         setLoading(false)
       })
   }, [categoryIndex, activeSort, searchValue, currentPage])
@@ -51,7 +49,7 @@ const Home = () => {
                   : items.map((obj) => <PizzaBlock key={obj.id} {...obj}/> )
         }
       </div>
-      <Pagination setCurrentPage={setCurrentPage}/>
+      <Pagination/>
     </div>
   )
 }
