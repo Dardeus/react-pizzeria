@@ -2,14 +2,15 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setActiveSort} from "../redux/slices/filterSlice";
 
-function Sort(){
+export const sortList = [{name: 'популярности (+)', sortProperty: 'rating'},
+  {name: 'популярности (-)', sortProperty: '-rating'},
+  {name: 'цене (+)', sortProperty: 'price'},
+  {name: 'цене (-)', sortProperty: '-price'},
+  {name: 'алфавиту (а-я)', sortProperty: 'title'},
+  {name: 'алфавиту (я-а)', sortProperty: '-title'}]
+
+const Sort = () => {
   const [visible, setVisible] = useState(false)
-  const sortList = [{name: 'популярности (+)', sortProperty: 'rating'},
-                    {name: 'популярности (-)', sortProperty: '-rating'},
-                    {name: 'цене (+)', sortProperty: 'price'},
-                    {name: 'цене (-)', sortProperty: '-price'},
-                    {name: 'алфавиту (а-я)', sortProperty: 'title'},
-                    {name: 'алфавиту (я-а)', sortProperty: '-title'}]
 
   const activeSort = useSelector(state => state.filter.activeSort);
   const dispatch = useDispatch()

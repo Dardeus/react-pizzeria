@@ -14,14 +14,19 @@ const filterSlice = createSlice ({
       state.categoryIndex = action.payload;
     },
     setActiveSort(state, action) {
-      state.activeSort = action.payload
+      state.activeSort = action.payload;
     },
     setCurrentPage(state, action) {
-      state.currentPage = action.payload
-    }
+      state.currentPage = action.payload;
+    },
+    setFilterParams(state, action) {
+      state.categoryIndex = Number(action.payload.categoryIndex);
+      state.activeSort = action.payload.activeSort;
+      state.currentPage = Number(action.payload.currentPage);
+    },
   }
 })
 
-export const { setCategoryIndex, setActiveSort, setCurrentPage } = filterSlice.actions;
+export const { setCategoryIndex, setActiveSort, setCurrentPage, setFilterParams } = filterSlice.actions;
 
 export default filterSlice.reducer;
