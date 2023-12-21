@@ -35,6 +35,22 @@ body {
     margin-bottom: 50px;
   }
 
+  &__error-info {
+    margin: 100px auto;
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+
   &__items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
