@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import CartPizzaBlock from "../components/CartPizzaBlock";
 import {cartSelector, clearItems} from "../redux/slices/cartSlice";
 import CartEmpty from "../components/CartPizzaBlock/CartEmpty";
-import React from "react";
+import React, {useEffect} from "react";
 
 const Cart: React.FC = () => {
   const { totalPrice, totalCount, items } = useSelector(cartSelector)

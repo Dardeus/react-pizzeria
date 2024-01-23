@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import pizzaLogo from '../assets/img/pizza-logo.svg'
 import {Link, useLocation} from "react-router-dom";
 import Search from "./Search";
@@ -6,8 +6,21 @@ import {useSelector} from "react-redux";
 import {cartSelector} from "../redux/slices/cartSlice";
 
 const Header: React.FC = () => {
-  const { totalPrice, totalCount} = useSelector(cartSelector)
+  const { totalPrice, totalCount, items} = useSelector(cartSelector)
   const { pathname } = useLocation()
+  const notFirstLoad = useRef(false)
+
+  useEffect(() => {
+    if (notFirstLoad.current) {
+      const data = JSON.stringify(items)
+      localStorage.setItem("cart", data)
+      localStorage.setItem("price", totalPrice.toString())
+      localStorage.setItem("count", totalCount.toString())
+      console.log(JSON.parse(localStorage.getItem('cart')!))
+    }
+    notFirstLoad.current = true
+  }, [items]);
+
 
   return(
     <div className="header">
@@ -21,7 +34,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </Link>
-        <Search/>
+        {pathname !== "/cart" && <Search/>}
         <button className="header__cart">
           {pathname !== "/cart" &&
             <Link to="/cart" className="button button--cart">
