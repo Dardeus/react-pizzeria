@@ -1,29 +1,36 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setActiveSort} from "../redux/slices/filterSlice";
+import {RootState} from "../redux/store";
 
-export const sortList = [{name: 'популярности (+)', sortProperty: 'rating'},
+
+type SortItem = {
+  name: string,
+  sortProperty: string,
+}
+
+export const sortList: SortItem[] = [{name: 'популярности (+)', sortProperty: 'rating'},
   {name: 'популярности (-)', sortProperty: '-rating'},
   {name: 'цене (+)', sortProperty: 'price'},
   {name: 'цене (-)', sortProperty: '-price'},
   {name: 'алфавиту (а-я)', sortProperty: 'title'},
   {name: 'алфавиту (я-а)', sortProperty: '-title'}]
 
-const Sort = () => {
+const Sort: React.FC = () => {
   const [visible, setVisible] = useState(false)
 
-  const activeSort = useSelector(state => state.filter.activeSort);
+  const activeSort = useSelector((state: RootState) => state.filter.activeSort);
   const dispatch = useDispatch()
-  const sortRef = useRef()
+  const sortRef= useRef<HTMLDivElement>(null)
 
-  const onClickSort = (i) => {
-    dispatch(setActiveSort(i));
+  const onClickSort = (obj: SortItem) => {
+    dispatch(setActiveSort(obj));
     setVisible(false);
   }
 
   useEffect(() => {
-    const outClick = (event) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const outClick = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setVisible(false)
       }
     }

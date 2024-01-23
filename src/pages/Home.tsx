@@ -2,40 +2,47 @@ import Categories from "../components/Categories";
 import Sort, {sortList} from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
-import React, {useContext, useEffect, useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import Pagination from "../components/Pagination";
-import {SearchContext} from "../App";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import qs from "qs";
 import {useNavigate} from "react-router-dom";
 import {setFilterParams} from "../redux/slices/filterSlice";
 import {fetchPizzas} from "../redux/slices/pizzasSlice";
+import {RootState, useAppDispatch} from "../redux/store";
 
-const Home = () => {
-  const categoryIndex = useSelector(state => state.filter.categoryIndex);
-  const activeSort = useSelector(state => state.filter.activeSort);
-  const currentPage = useSelector(state => state.filter.currentPage);
-  const navigate = useNavigate()
+type PizzaProps = {
+  id: number,
+  price: number,
+  title: string,
+  imageUrl: string,
+  sizes: number[],
+  types: number[],
+}
 
-  const {items, status} = useSelector(state => state.pizzas)
-  const {searchValue} = useContext(SearchContext);
+const Home: React.FC = () => {
+  const {categoryIndex, activeSort, currentPage} = useSelector((state: RootState) => state.filter);
+  const {items, status} = useSelector((state: RootState) => state.pizzas)
+  const {searchValue} = useSelector((state: RootState) => state.filter)
+
   const isSearch = useRef(false);
   const isFirstRender = useRef(true);
+  const navigate = useNavigate()
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const getPizzas = async () => {
     const sorting=activeSort.sortProperty
 
     const url = new URL('https://6569c4f9de53105b0dd79f48.mockapi.io/items');
-    if (categoryIndex) url.searchParams.append('category', categoryIndex);
+    if (categoryIndex) url.searchParams.append('category', categoryIndex.toString());
     url.searchParams.append('sortBy', sorting.replace('-', ''));
     url.searchParams.append('order', sorting.includes('-') ? 'desc' : 'asc');
-    url.searchParams.append('page', currentPage);
-    url.searchParams.append('limit', 4);
+    url.searchParams.append('page', currentPage.toString());
+    url.searchParams.append('limit', '4');
     if (searchValue) url.searchParams.append('search', searchValue);
 
-    dispatch(fetchPizzas(url))
+    dispatch(fetchPizzas(url.toString()))
   }
 
   useEffect(() => {
@@ -89,7 +96,7 @@ const Home = () => {
           {
             status === "loading"
             ? [...new Array(8)].map((_, i) => <Skeleton key={i}/>)
-            : items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>)
+            : items.map((obj: PizzaProps) => <PizzaBlock key={obj.id} {...obj}/>)
           }
          </div>)
       }

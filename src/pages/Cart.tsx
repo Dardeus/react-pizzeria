@@ -1,11 +1,12 @@
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import CartPizzaBlock from "../components/CartPizzaBlock";
-import {clearItems} from "../redux/slices/cartSlice";
+import {cartSelector, clearItems} from "../redux/slices/cartSlice";
 import CartEmpty from "../components/CartPizzaBlock/CartEmpty";
+import React from "react";
 
-const Cart = () => {
-  const { totalPrice, totalCount, items } = useSelector(state => state.cart)
+const Cart: React.FC = () => {
+  const { totalPrice, totalCount, items } = useSelector(cartSelector)
 
   const dispatch = useDispatch()
 

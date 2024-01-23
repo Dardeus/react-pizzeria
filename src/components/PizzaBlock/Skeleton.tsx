@@ -1,7 +1,7 @@
 import React from "react"
-import ContentLoader from "react-content-loader"
+import ContentLoader, {IContentLoaderProps} from "react-content-loader"
 
-const Skeleton = (props) => (
+const Skeleton: React.FC<IContentLoaderProps> = (props) => (
   <ContentLoader
     speed={2}
     width={280}
