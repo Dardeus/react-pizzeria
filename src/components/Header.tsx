@@ -19,7 +19,7 @@ const Header: React.FC = () => {
       console.log(JSON.parse(localStorage.getItem('cart')!))
     }
     notFirstLoad.current = true
-  }, [items]);
+  }, [items, totalCount, totalPrice]);
 
 
   return(
