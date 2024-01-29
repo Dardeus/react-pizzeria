@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import CartPizzaBlock from "../components/CartPizzaBlock";
 import {cartSelector, clearItems} from "../redux/slices/cartSlice";
 import CartEmpty from "../components/CartPizzaBlock/CartEmpty";
-import React, {useEffect} from "react";
+import React from "react";
 
 const Cart: React.FC = () => {
   const { totalPrice, totalCount, items } = useSelector(cartSelector)
@@ -45,7 +45,7 @@ const Cart: React.FC = () => {
             <span> Сумма заказа: <b>{ totalPrice } ₽</b> </span>
           </div>
           <div className="cart__bottom-buttons">
-            <Link to="/" className="button button--outline button--add go-back-btn">
+            <Link to="/react-pizzeria/" className="button button--outline button--add go-back-btn">
               <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7 13L1 6.93015L6.86175 1" stroke="#D3D3D3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
               </svg>
