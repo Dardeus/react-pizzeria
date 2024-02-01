@@ -16,7 +16,6 @@ const Header: React.FC = () => {
       localStorage.setItem("cart", data)
       localStorage.setItem("price", totalPrice.toString())
       localStorage.setItem("count", totalCount.toString())
-      console.log(JSON.parse(localStorage.getItem('cart')!))
     }
     notFirstLoad.current = true
   }, [items, totalCount, totalPrice]);
