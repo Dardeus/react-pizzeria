@@ -95,7 +95,7 @@ const Home: React.FC = () => {
         ) : (<div className="content__items">
           {
             status === "loading"
-            ? [...new Array(8)].map((_, i) => <Skeleton key={i}/>)
+            ? [...new Array(4)].map((_, i) => <Skeleton key={i}/>)
             : items.map((obj: PizzaProps) => <PizzaBlock key={obj.id} {...obj}/>)
           }
          </div>)
